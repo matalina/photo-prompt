@@ -9,23 +9,6 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
-*/
-
-Route::get('/', function () 
-{
-	Crew\Unsplash\HttpClient::init([
-   		'applicationId' => env('IMG_ID'),
-    		'secret'        => env('IMG_SECRET'),
-	]);
-
-	$random = Crew\Unsplash\Photo::random();
-
-
-	View::share('random', $random);
-	return View::make('random.photo');
-});
-
-/*
 |--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
@@ -37,5 +20,7 @@ Route::get('/', function ()
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+	Route::get('/','PhotoPromptController@getMonth');
+	Route::get('view/{year}/{month}','PhotoPromptController@getMonth');
+    //Route::get('generate/{year}/{month}', 'PhotoPromptController@generate');
 });
